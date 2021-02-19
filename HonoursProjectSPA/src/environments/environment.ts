@@ -2,8 +2,11 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+
 export const environment = {
-  production: false
+  production: false,
+  surveyGetURL: 
+  'https://api.surveyjs.io/private/Surveys/getSurveyResults/73b90aec-4f97-4ea9-84f3-5b39fb0446dd?accessKey=66cba137050a4be68ac02c7792d27744&from={from}&till={till}'
 };
 
 /*
