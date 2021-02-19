@@ -3,12 +3,4 @@
 <link href="https://unpkg.com/survey-angular@1.8.31/modern.css" type="text/css" rel="stylesheet" />
 <script src="https://unpkg.com/survey-angular@1.8.31/survey.angular.min.js"></script>
 
-<script>
-    Survey.StylesManager.applyTheme("modern");
-
-var surveyJSON = {pages:[{name:"page1",elements:[{type:"checkbox",name:"question1",choices:["item1","item2","item3"]},{type:"dropdown",name:"question2",choices:["item1","item2","item3"]},{type:"rating",name:"question3"}]}]}
-
-function sendDataToServer(survey) {
-    survey.sendResult('191dee6c-4a65-4279-ab62-2d46e71cecba');
-}
-</script>
+<div id='surveyElement'></div>
