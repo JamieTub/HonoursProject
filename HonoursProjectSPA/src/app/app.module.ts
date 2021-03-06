@@ -9,6 +9,12 @@ import { SurveyComponent } from './survey/survey.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
+import { BarModule } from 'ng-d3-graphs';
+import { BarComponent } from './bar/bar.component';
+import { LineComponent } from './line/line.component';
+import { PieComponent } from './pie/pie.component';
+import { FormsModule } from '@angular/forms';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -16,13 +22,19 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     ResultsComponent,
     SurveyComponent,
-    NavbarComponent
+    NavbarComponent,
+    BarComponent,
+    LineComponent,
+    PieComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    BarModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

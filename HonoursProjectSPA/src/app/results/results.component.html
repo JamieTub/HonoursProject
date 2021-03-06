@@ -1,1 +1,16 @@
-<p>results works!</p>
+<h2>Survey Results</h2>
+
+<p class="lineText">Please select a question to display the results of the survey.</p>
+
+<form class="form-inline">
+    <select [(ngModel)]="selectedOption" name="selectedOption">
+      <option disabled>Question Number</option>
+      <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]" value={{i}}>{{i}}</option>
+    </select>
+    <button (click)="renderChart()" class="btn btn-primary">Submit</button>
+</form>
+  
+<app-bar [data]="data" *ngIf="barchart"></app-bar>
+<app-pie [data]="data" *ngIf="piechart"></app-pie>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
