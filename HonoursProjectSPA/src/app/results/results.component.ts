@@ -3,6 +3,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import * as d3 from 'd3';
 import survey from './../_data/survey.json';
 import { FormsModule } from '@angular/forms'
+import appSecrets from '../appSecrets.json'
 
 @Component({
   selector: 'app-results',
@@ -24,7 +25,7 @@ export class ResultsComponent implements OnInit {
   }
 
   getSurveyResults(){
-    this.http.get<any>('https://api.surveyjs.io/private/Surveys/getSurveyResults/a7bcbfdd-753c-48a5-bf11-5c183e864e0c?accessKey=66cba137050a4be68ac02c7792d27744&from={from}&till={till}').subscribe(response => {
+    this.http.get<any>(appSecrets.url).subscribe(response => {
       this.results = response;
       console.log(this.results)
       //console.log(this.results);
