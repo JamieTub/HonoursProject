@@ -13,10 +13,15 @@ import appSecrets from '../appSecrets.json'
 export class ResultsComponent implements OnInit {
 
   results: any;
+  raw: any;
   data: any = [];
   selectedOption: number;
+  selectedAreaValue: number = -1;
   barchart = false;
   piechart = false;
+  regions = ["Ayrshire", "Borders", "Central Scotland", "Dumfries & Galloway", "Dumbartonshire and Argyll & Bute",
+  "Fife", "Grampian", "Glasgow", "Highlands and Western Isles", "Lanarkshire", "Lothian",
+  "Orkney and Shetland", "Renfewshire", "Tayside"];
 
   constructor(private http: HttpClient) { }
 
@@ -26,48 +31,63 @@ export class ResultsComponent implements OnInit {
 
   getSurveyResults(){
     this.http.get<any>(appSecrets.url).subscribe(response => {
-      this.results = response;
-      console.log(this.results)
-      //console.log(this.results);
+      this.raw = response;
+      console.log(this.raw)
     }, error => {
       console.log('Something went wrong when requesting survey results.')
     })
   }
 
+  // actionFilter(){
+    
+  // }
+
+  filterResults(results, selectedAreaValue){
+    //get area to filter by from drop down on results page
+    let selectedArea = selectedAreaValue
+    
+    //set unfiltered data to the entire results array
+    
+    let unfiltered = results;
+    
+    //init new empty array for the filtered data
+    let filteredData = [];
+
+    //setting a searchable string for query
+    var searchableString = "item" + selectedArea
+
+    //loop the unfiltered results array
+    for(var i = 0; i < unfiltered.Data.length; i++){    
+        //if the answer to the second question matches the selected area
+        //from the dropdown, add the element to the new filtered array
+        if(unfiltered.Data[i].question2 == searchableString){
+            filteredData.push(unfiltered.Data[i])
+        }
+    }
+    return filteredData;
+  }
+
+  //clear filter
+  clearFilter(){
+    this.ngOnInit();
+  }
+
   //the trigger of the dropdown
   renderChart(){
-    this.barchart = false;
-    this.piechart = false;
+    this.CreatePieChartData([1,1])
     //call getLabels
+
+    if(this.selectedAreaValue == -1){
+      this.results = this.raw.Data
+    }
+    else{
+      let filter = this.filterResults(this.raw, this.selectedAreaValue);
+      this.results = filter;
+    }
     let labels = this.getQuestionLabels(this.selectedOption);
     //call questionResults
     let results = this.getQuestionResults(this.selectedOption, labels);
-  } 
-
-  //this took me a whole afternoon
-  //should be labels.length
-
-  // getNumberOfAnswers(question: number){
-  //   if(question < 6){
-  //     for(var i = 0; i < survey.pages[0].elements.length; i++){
-  //       if(survey.pages[0].elements[i].name == "question" + question){
-  //           let noAn = survey.pages[0].elements[i];
-  //           let numChoices = noAn.choices.length;
-  //           return numChoices;
-  //       }
-  //     }
-  //   }
-  //  else{
-  //     question = question - 6;
-  //     for(var i = 0; i < survey.pages[0].elements.length; i++){
-  //       if(survey.pages[1].elements[i].name == "question" + question){
-  //           let noAn = survey.pages[1].elements[i];
-  //           let numChoices = noAn.choices.length;
-  //           return numChoices;
-  //       }
-  //     }
-  //   }
-  // }
+  }  
 
   getQuestionResults(question: number, labels: any[]) {
     let type = this.getQuestionType(question);
@@ -77,26 +97,20 @@ export class ResultsComponent implements OnInit {
       let answers = this.getArrayQuestionResult();
       //let size = labels.length;
       let results = this.countAllOccurences(answers, labels)
-
-      // let countOccurrences = (answers, val) =>
-      // answers.reduce((a, v) => (v === val ? a + 1 : a), 0);
-
-      // for(var i = 1; i <= size; i++){
-      //   values.push(countOccurrences(answers, "item" + i))
-      // }
-      //call CreateBarChartData(labels, values)
       this.CreateBarChartData(labels, results)
     }
     else if(type == "radiogroup" || type == "dropdown") {
       //do count for singles
       //call CreateBarChartData(labels, values)
+      let answers = this.getSingleQuestionResults()
+      let results = this.countAllOccurences(answers, labels);
+      this.CreateBarChartData(labels, results)
     }
     else if(type = "boolean") {
       //do count for booleans
       let answers = this.getBoolAnswer();
       let results = this.countBools(answers)
       this.CreatePieChartData(results)
-
     }
   }
 
@@ -104,14 +118,19 @@ export class ResultsComponent implements OnInit {
     let values = [];
     var numOfTrue = 0;
 
+    //loop the responses to the question
     for(var i = 0; i < answers.length; i++){
+      //if answer is true
       if(answers[i] == true){
+        //increment the number of true
         numOfTrue++;
       }
     }
+    //setting the number of false equal to total answers minus number of true
     var numOfFalse = answers.length - numOfTrue;
+    //push the two values to the values array
     values.push(numOfTrue, numOfFalse);
-    console.log(values)
+    //return array
     return values;
   }
 
@@ -135,7 +154,6 @@ export class ResultsComponent implements OnInit {
       //using the number in the string, add 1 to the number in the position of the array
       results[num]++;
     });
-    console.log(results)
     return results;
   }
 
@@ -175,59 +193,82 @@ export class ResultsComponent implements OnInit {
     let answers = [];
     if(this.selectedOption == 1) {
       
-      for(let i = 0; i < this.results.Data.length; ++i) {
-        for(let j = 0; j < this.results.Data[i].question1.length; ++j) {
-          answers.push(this.results.Data[i].question1[j]);
+      for(let i = 0; i < this.results.length; ++i) {
+        for(let j = 0; j < this.results[i].question1.length; ++j) {
+          answers.push(this.results[i].question1[j]);
         }
       }
     }
     else if(this.selectedOption == 8) {
-      for(let i = 0; i < this.results.Data.length; ++i) {
-        for(let j = 0; j < this.results.Data[i].question8.length; ++j) {
-          answers.push(this.results.Data[i].question8[j]);
+      for(let i = 0; i < this.results.length; ++i) {
+        for(let j = 0; j < this.results[i].question8.length; ++j) {
+          answers.push(this.results[i].question8[j]);
         }
       }
     }
     else if(this.selectedOption == 9) {
-      for(let i = 0; i < this.results.Data.length; ++i) {
-        for(let j = 0; j < this.results.Data[i].question9.length; ++j) {
-          answers.push(this.results.Data[i].question9[j]);
+      for(let i = 0; i < this.results.length; ++i) {
+        for(let j = 0; j < this.results[i].question9.length; ++j) {
+          answers.push(this.results[i].question9[j]);
         }
       }
     }
     else if(this.selectedOption == 10) {
-      for(let i = 0; i < this.results.Data.length; ++i) {
-        for(let j = 0; j < this.results.Data[i].question10.length; ++j) {
-          answers.push(this.results.Data[i].question10[j]);
+      for(let i = 0; i < this.results.length; ++i) {
+        for(let j = 0; j < this.results[i].question10.length; ++j) {
+          answers.push(this.results[i].question10[j]);
         }
       }
     }
     return answers;
 
+  }
+
+  getSingleQuestionResults(){
+    //2,3,5
+    let answers = [];
+    if(this.selectedOption == 2) {   
+      for(let i = 0; i < this.results.length; ++i) {
+          answers.push(this.results[i].question2);
+        }
+    }
+    else if(this.selectedOption == 3) {
+      for(let i = 0; i < this.results.length; ++i) {     
+          answers.push(this.results[i].question3);      
+      }
+    }
+    else if(this.selectedOption == 5) {
+      for(let i = 0; i < this.results.length; ++i) {
+          answers.push(this.results[i].question5);
+        } 
+    }
+    return answers;
   }
 
   getBoolAnswer(){
     let answers = [];
     //4,6,7
     if(this.selectedOption == 4){
-      for(let i = 0; i < this.results.Data.length; ++i){
-        answers.push(this.results.Data[i].question4);
+      for(let i = 0; i < this.results.length; ++i){
+        answers.push(this.results[i].question4);
       }
     }
     else if(this.selectedOption == 6){
-      for(let i = 0; i < this.results.Data.length; ++i){
-        answers.push(this.results.Data[i].question6);
+      for(let i = 0; i < this.results.length; ++i){
+        answers.push(this.results[i].question6);
       }
     }
     else if(this.selectedOption == 7){
-      for(let i = 0; i < this.results.Data.length; ++i){
-        answers.push(this.results.Data[i].question7);
+      for(let i = 0; i < this.results.length; ++i){
+        answers.push(this.results[i].question7);
       }
     }
     return answers;
+    
   }
 
   CreatePieChartData(answers){
+
     let data = [
       {"label": "true " + answers[0], "value": answers[0]},
       {"label": "false " + answers[1], "value": answers[1]}];
@@ -245,6 +286,7 @@ export class ResultsComponent implements OnInit {
   }
 
   CreateBarChartData(labels, values) {
+    
     let data = [];
     for(let i = 0; i < labels.length; ++i) {
       let obj = {
@@ -255,8 +297,7 @@ export class ResultsComponent implements OnInit {
     }
     this.data = data;
     this.piechart = false;
-    this.barchart = true;
-    
+    this.barchart = true;   
   }
 
 }

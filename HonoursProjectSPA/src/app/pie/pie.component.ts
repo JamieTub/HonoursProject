@@ -8,14 +8,6 @@ import * as d3 from 'd3';
 })
 export class PieComponent implements OnInit {
 
-  // private data = [
-  //   {"Framework": "Vue", "Stars": "166443", "Released": "2014"},
-  //   {"Framework": "React", "Stars": "150793", "Released": "2013"},
-  //   {"Framework": "Angular", "Stars": "62342", "Released": "2016"},
-  //   {"Framework": "Backbone", "Stars": "27647", "Released": "2010"},
-  //   {"Framework": "Ember", "Stars": "21471", "Released": "2011"},
-  // ];
-
   @Input()data: any[] = [];
 
   private svg;
@@ -33,8 +25,13 @@ export class PieComponent implements OnInit {
   }
 
   ngOnChanges(){
-    console.log("called")
-    console.log(this.data)
+    if(this.data.length == 0){
+      this.data = [
+        {"label": "true " + 1, "value": 1},
+        {"label": "false " + 1, "value": 1}];
+    }
+    console.log(this.data);
+    console.log("pie called")
     if(!this.svg){
       this.createSvg();
     }

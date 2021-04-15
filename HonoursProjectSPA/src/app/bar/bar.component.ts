@@ -21,20 +21,14 @@ export class BarComponent implements OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    this.createSvg();
-    this.drawBars(this.data);
   }
 
   ngOnChanges(){
-    console.log("called")
-    console.log(this.data)
     if(!this.svg){
       this.createSvg();
       this.drawBars(this.data);
     }else{
-      d3.selectAll("bars").remove();
-      this.svg = null;
-      this.ngOnInit();
+
     } 
   }
 
@@ -83,7 +77,7 @@ export class BarComponent implements OnChanges {
     .attr("width", x.bandwidth())
     .attr("height", (d) => this.height - y(d.y))
     .attr("fill", "#d04a35");
-}
+  }
 
 }
 
