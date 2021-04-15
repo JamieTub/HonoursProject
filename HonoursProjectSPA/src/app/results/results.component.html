@@ -1,0 +1,27 @@
+<h2>Survey Results</h2>
+
+<p class="lineText">Please select a question to display the results of the survey.</p>
+
+<div class="flex-container">
+
+  <form class="form-inline">
+    <select [(ngModel)]="selectedOption" name="selectedOption">
+      <option disabled>Question Number</option>
+      <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]" value={{i}}>{{i}}</option>
+    </select>
+    <select [(ngModel)]="selectedAreaValue" name="selectedOption">
+      <option disabled>Filter by Region</option>
+      <option *ngFor="let i of regions; index as item" value={{item+1}}>{{i}}</option>
+    </select>
+    <button (click)="renderChart()" class="btn btn-primary">Submit</button>
+  </form>
+  <button (click)="clearFilter()" class="btn btn-primary">Clear Filter</button>
+
+</div>
+
+
+  
+<app-bar [data]="data" *ngIf="barchart"></app-bar>
+<app-pie [data]="data" *ngIf="piechart"></app-pie>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>

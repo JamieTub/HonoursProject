@@ -1,0 +1,236 @@
+{
+    "pages": [
+     {
+      "name": "page1",
+      "elements": [
+       {
+        "type": "checkbox",
+        "name": "question1",
+        "title": "Do you possess any predispositions about electric vehicles?",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Perceived increased initial cost"
+         },
+         {
+          "value": "item2",
+          "text": "Lack of charging infrastructure in current area"
+         },
+         {
+          "value": "item3",
+          "text": "Comparatively less choice of style of vehicle "
+         },
+         {
+          "value": "item4",
+          "text": "Uneducated regarding electric vehicles"
+         },
+         {
+          "value": "item5",
+          "text": "Scepticism surrounding the technology"
+         },
+         {
+          "value": "item6",
+          "text": "I do not have any predispositions on electric vehicles"
+         }
+        ]
+       },
+       {
+        "type": "dropdown",
+        "name": "question2",
+        "title": "Select the county where you reside.",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Ayrshire"
+         },
+         {
+          "value": "item2",
+          "text": "Borders"
+         },
+         {
+          "value": "item3",
+          "text": "Central Scotland"
+         },
+         {
+          "value": "item4",
+          "text": "Dumfries & Galloway"
+         },
+         {
+          "value": "item5",
+          "text": "Dunbartonshire and Argyll & Bute"
+         },
+         {
+          "value": "item6",
+          "text": "Fife"
+         },
+         {
+          "value": "item7",
+          "text": "Grampian"
+         },
+         {
+          "value": "item8",
+          "text": "Glasgow"
+         },
+         {
+          "value": "item9",
+          "text": "Highlands and Western Isles"
+         },
+         {
+          "value": "item10",
+          "text": "Lanarkshire"
+         },
+         {
+          "value": "item11",
+          "text": "Lothian"
+         },
+         {
+          "value": "item12",
+          "text": "Orkney and Shetland"
+         },
+         {
+          "value": "item13",
+          "text": "Renfrewshire"
+         },
+         {
+          "value": "item14",
+          "text": "Tayside"
+         }
+        ]
+       },
+       {
+        "type": "dropdown",
+        "name": "question3",
+        "title": "Select your average household income",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Less than £10,000"
+         },
+         {
+          "value": "item2",
+          "text": "£10,000 - £30,000"
+         },
+         {
+          "value": "item3",
+          "text": "£30,000 - £50,000"
+         },
+         {
+          "value": "item4",
+          "text": "£50,000 +"
+         },
+         {
+          "value": "item5",
+          "text": "Prefer not to say"
+         }
+        ]
+       },
+       {
+        "type": "boolean",
+        "name": "question4",
+        "title": "Do you base any of your decision making on the impact it could have on the environment?"
+       },
+       {
+        "type": "radiogroup",
+        "name": "question5",
+        "title": "On average, how many miles a week do you drive?",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Less than 100 miles"
+         },
+         {
+          "value": "item2",
+          "text": "100 - 200 miles"
+         },
+         {
+          "value": "item3",
+          "text": "More than 200 miles"
+         }
+        ]
+       }
+      ],
+      "title": "Page 1/2"
+     },
+     {
+      "name": "page2",
+      "elements": [
+       {
+        "type": "boolean",
+        "name": "question6",
+        "title": "Do you know anyone who owns and drives an electric vehicle?"
+       },
+       {
+        "type": "boolean",
+        "name": "question7",
+        "title": "Does the fluctuating price of fossil fuels used in tradional vehicles concern you?"
+       },
+       {
+        "type": "checkbox",
+        "name": "question8",
+        "title": "Which factor would most likely influence your decision to purchase an electric vehicle?",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Increased range"
+         },
+         {
+          "value": "item2",
+          "text": "Lower initial cost"
+         },
+         {
+          "value": "item3",
+          "text": "Expanded charging infrastructure"
+         }
+        ]
+       },
+       {
+        "type": "checkbox",
+        "name": "question9",
+        "title": "What are the most appealing features of traditional petrol/diesel vehicles?",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Better access to refueling stations"
+         },
+         {
+          "value": "item2",
+          "text": "Better access to servicing "
+         },
+         {
+          "value": "item3",
+          "text": "More populated resell market "
+         },
+         {
+          "value": "item4",
+          "text": "Familiarity with the technology"
+         }
+        ]
+       },
+       {
+        "type": "checkbox",
+        "name": "question10",
+        "title": "Which are the most appealing characteristics of electric vehicles to you?",
+        "choices": [
+         {
+          "value": "item1",
+          "text": "Reduced impact on the environment"
+         },
+         {
+          "value": "item2",
+          "text": "Exemption from emissions tax"
+         },
+         {
+          "value": "item3",
+          "text": "I am an early adopter of new technology"
+         },
+         {
+          "value": "item4",
+          "text": "The availability of UK grant to help with purchase cost"
+         }
+        ]
+       }
+      ],
+      "title": "Page 2/2"
+     }
+    ]
+   }
